@@ -1,0 +1,26 @@
+baseURL = 'https://shrmpy.github.io/pages'
+timeZone = 'UTC'
+summaryLength = 25
+disableKinds = ["taxonomy", "term", "sitemap"]
+
+[module]
+[[module.mounts]]
+  source = 'content'
+  target = 'content'
+[[module.mounts]]
+  source = 'md-articles'
+  target = 'content/posts'
+
+[privacy]
+  [privacy.disqus]
+    disable = true
+  [privacy.googleAnalytics]
+    disable = true
+  [privacy.instagram]
+    disable = true
+  [privacy.twitter]
+    disable = true
+  [privacy.vimeo]
+    disable = true
+  [privacy.youtube]
+    disable = true

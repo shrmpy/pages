@@ -1,0 +1,61 @@
+on: 
+  push:
+    branches: [main]
+  pull_request:
+
+
+jobs:
+  gm2md_job:
+    runs-on: ubuntu-latest
+    name: Convert gemtext job
+    steps:
+      - name: Checkout step
+        uses: actions/checkout@v3
+      - name: gm2md step
+        id: gm2md
+        uses: shrmpy/actions-gemini2md@v1.3
+      - name: Frontmatter step 
+        run: |
+          for file in gemtext/*.md; do
+            sed -i '1i +++\ndraft = false\n+++\n' "$file"
+          done
+
+      - name: Hugo Section step 
+        run: |
+          mv content/_index.md gemtext/
+
+      - name: Archive md artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: first-pass-markdown
+          path: |
+            gemtext/*.md
+
+
+  deploy:
+    needs: gm2md_job
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+          fetch-depth: 0
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: '0.100.1'
+
+      - name: Unarchive md artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: first-pass-markdown
+          path: md-articles
+      - name: Build
+        run: hugo --minify
+
+      - name: Github pages
+        uses: peaceiris/actions-gh-pages@v3
+        if: github.ref == 'refs/heads/main'
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public

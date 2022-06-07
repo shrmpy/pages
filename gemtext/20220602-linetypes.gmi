@@ -1,0 +1,24 @@
+# Heading
+
+## Sub-heading
+
+### Sub-subheading
+
+* Mercury
+* Gemini
+* Apollo
+
+=> https://example.com    A cool website
+=> gopher://example.com   An even cooler gopherhole
+=> gemini://example.com   A supremely cool Gemini capsule
+=> sftp://example.com
+
+> Gemtext supports blockquotes.  The quoted content is written as a single long line, which begins with a single > character
+
+```
+#!/bin/sh
+
+echo $HOME
+echo $PATH
+```
+

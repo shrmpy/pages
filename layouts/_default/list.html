@@ -1,0 +1,23 @@
+{{ define "main" }}
+<header class="tc ph4">
+  <h1 class="f2 f-subheadline-ns lh-title-ns mv3">{{ .Title }}</h1>
+  <h2 class="f4 f3-ns mt0 lh-copy-ns">{{ .Content }}</h2>
+</header>
+
+<div class="mw6 center pb3 pb5-ns">
+  <table class="collapse w-100 mw8">
+
+    <tr class="striped--light-gray"><th class="pv2 ph3 f6 fw6 ttu">Post</th><th class="pv2 ph3 f6 fw6 ttu">Mins</th><th class="pv2 ph3 f6 fw6 ttu">Summary</th></tr>
+    {{ range .Paginator.Pages }}
+    <tr class="striped--light-gray">
+      <td class="pv2 ph3 f6 fw6 ">
+        <a href="{{ .Permalink }}" class="link dim">{{ .File.TranslationBaseName }}</a>
+      </td>
+      <td class="pv2 ph3 f6 fw6 "><p>{{ .ReadingTime }}</p></td>
+      <td class="pv2 ph3 f6 fw6 "><p>{{ .Summary }}</p></td>
+    </tr>
+    {{end}}
+
+  </table>
+</div>
+{{ end }}
